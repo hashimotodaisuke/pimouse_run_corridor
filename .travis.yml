@@ -1,0 +1,16 @@
+sudo: required
+dist: trusty
+
+before_script:
+  #install ros and make catkin work space
+  - bash -xve ./test/travis_ros_install.bash
+  #change permission device driver (need? because there is no device file in travis env.)
+  - source ~/catkin_ws/devel/setup.bash
+  #sync catkin work space and make catkin
+  - bash -xve ./test/travis_package_make.bash
+  - source ~/catkin_ws/devel/setup.bash
+  #prepare eahc rt* device file. beacuse there is no device file in travis env. 
+  - bash -xve ./test/travis_prepare_dummy_files.bash
+script:
+  - rostest pimouse_run_corridor wall_stop.lanuch
+

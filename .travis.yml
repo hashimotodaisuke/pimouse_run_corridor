@@ -12,5 +12,5 @@ before_script:
   #prepare eahc rt* device file. beacuse there is no device file in travis env. 
   - bash -xve ./test/travis_prepare_dummy_files.bash
 script:
-  - rostest pimouse_run_corridor wall_stop.lanuch
+  - rostest pimouse_run_corridor wall_stop.launch
 

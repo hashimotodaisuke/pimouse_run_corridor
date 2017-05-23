@@ -6,6 +6,9 @@ from std_srvs.srv import Trigger, TriggerResponse
 from pimouse_ros.msg import LightSensorValues
 
 DISTANCE_VALUE = 50
+THRESHOLD_FRONT_WALL = 50
+THRESHOLD_LEFT_WALL = 50
+THRESHOLD_RIGHT_WALL = 50
 
 class WallAround():
 	def __init__(self):
@@ -22,13 +25,13 @@ class WallAround():
 		self.sensor_values = message
 
 	def wall_front(self, ls):
-		return ls.left_forward > 50 or ls.right_forward > 50
+		return ls.left_forward > THRESHOLD_FRONT_WALL  or ls.right_forward > THRESHOLD_FRONT_WALL
 
 	def too_right(self, ls):
-		return ls.right_side > 50
+		return ls.right_side > THRESHOLD_RIGHT_WALL
 
 	def too_left(self, ls):
-		return ls.left_side > 50
+		return ls.left_side > THRESHOLD_LEFT_WALL
 
 	def run(self):
 		# wake up every 20Hz(50ms)and check lightsensor

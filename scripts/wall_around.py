@@ -21,8 +21,8 @@ from geometry_msgs.msg import WrenchStamped
 
 DISTANCE_VALUE = 5
 THRESHOLD_FRONT_WALL = 5
-THRESHOLD_LEFT_WALL = 5
-THRESHOLD_RIGHT_WALL = 5
+THRESHOLD_LEFT_WALL = 2
+THRESHOLD_RIGHT_WALL = -2
 
 class WallAround():
 	def __init__(self):
@@ -44,18 +44,18 @@ class WallAround():
 		if self.sensor.wrench.force.x < 0:
 			self.sensor.wrench.force.x = -1 * self.sensor.wrench.force.x
 		self.force_x = int(self.sensor.wrench.force.x)
-		if self.sensor.wrench.force.y < 0:
-			self.sensor.wrench.force.y = -1 * self.sensor.wrench.force.y
+
 		self.force_y = int(self.sensor.wrench.force.y)
+
 		if self.sensor.wrench.force.z < 0:
 			self.sensor.wrench.force.z = -1 * self.sensor.wrench.force.z
 		self.force_z = int(self.sensor.wrench.force.z)
 
 	def wall_front(self):
-		return self.force_x > THRESHOLD_FRONT_WALL  or self.force_y > THRESHOLD_FRONT_WALL
+		return self.force_x > THRESHOLD_FRONT_WALL
 
 	def too_right(self):
-		return self.force_x > THRESHOLD_RIGHT_WALL
+		return THRESHOLD_RIGHT_WALL > self.force_y
 
 	def too_left(self):
 		return self.force_y > THRESHOLD_LEFT_WALL
